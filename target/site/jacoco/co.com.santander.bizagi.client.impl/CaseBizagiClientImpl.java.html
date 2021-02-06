@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CaseBizagiClientImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bizagi-web</a> &gt; <a href="index.source.html" class="el_package">co.com.santander.bizagi.client.impl</a> &gt; <span class="el_source">CaseBizagiClientImpl.java</span></div><h1>CaseBizagiClientImpl.java</h1><pre class="source lang-java linenums">package co.com.santander.bizagi.client.impl;
+
+import co.com.santander.bizagi.client.CaseBizagiClient;
+import co.com.santander.bizagi.dto.BizAgiWSParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.tempuri.CreateCases;
+import org.tempuri.CreateCasesResponse;
+import org.tempuri.WorkflowEngineSOA;
+import org.tempuri.WorkflowEngineSOASoap;
+
+import java.net.MalformedURLException;
+import java.util.Collections;
+
+@Service
+public class CaseBizagiClientImpl implements CaseBizagiClient {
+    private WorkflowEngineSOASoap workflowEngineSOASoap;
+
+    @Autowired
+<span class="fc" id="L20">    public CaseBizagiClientImpl(WorkflowEngineSOA workflowEngineSOA) {</span>
+<span class="fc" id="L21">        this.workflowEngineSOASoap = workflowEngineSOA.getWorkflowEngineSOASoap();</span>
+<span class="fc" id="L22">    }</span>
+
+    @Override
+    public String createCaseString(String request) throws MalformedURLException {
+<span class="fc" id="L26">        return workflowEngineSOASoap.createCasesAsString(request);</span>
+    }
+
+    @Override
+    public CreateCasesResponse.CreateCasesResult createCase(BizAgiWSParam request) throws MalformedURLException {
+<span class="fc" id="L31">        CreateCases.CasesInfo casesInfo = new CreateCases.CasesInfo();</span>
+<span class="fc" id="L32">        casesInfo.setContent(Collections.singletonList(request));</span>
+<span class="fc" id="L33">        return workflowEngineSOASoap.createCases(casesInfo);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

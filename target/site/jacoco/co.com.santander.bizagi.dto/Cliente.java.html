@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cliente.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bizagi-web</a> &gt; <a href="index.source.html" class="el_package">co.com.santander.bizagi.dto</a> &gt; <span class="el_source">Cliente.java</span></div><h1>Cliente.java</h1><pre class="source lang-java linenums">package co.com.santander.bizagi.dto;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
+import lombok.Data;
+
+<span class="nc bnc" id="L8" title="All 426 branches missed.">@Data</span>
+<span class="pc" id="L9">@Builder</span>
+@ApiModel(value = &quot;Cliente&quot;, description = &quot;Dto that will have the customer data.&quot;)
+public class Cliente {
+	
+	@ApiModelProperty(value = &quot;Type of customer identification.&quot; , example = &quot;cc&quot;)
+<span class="nc" id="L14">    private String Tipodeidentificacion;</span>
+	
+	@ApiModelProperty(value = &quot;Customer identification number.&quot; , example = &quot;10073728393&quot;)
+<span class="nc" id="L17">    private int NumeroIdentificacion;</span>
+	
+	@ApiModelProperty(value = &quot;First last name of the customer.&quot; , example = &quot;Gutierrez&quot;)
+<span class="nc" id="L20">    private String Apellido1;</span>
+	
+	@ApiModelProperty(value = &quot;Second last name of the customer.&quot; , example = &quot;Caro&quot;)
+<span class="nc" id="L23">    private String Apellido2;</span>
+	
+	@ApiModelProperty(value = &quot;First name of the customer.&quot; , example = &quot;Juan&quot;)
+<span class="nc" id="L26">    private String Nombre1;</span>
+	
+	@ApiModelProperty(value = &quot;Second name of the customer.&quot; , example = &quot;Angel&quot;)
+<span class="nc" id="L29">    private String Nombre2;</span>
+
+	@ApiModelProperty(value = &quot;Birthdate of the customer.&quot; , example = &quot;1990-21-12&quot;)
+<span class="nc" id="L32">    private String fechaNacimiento;</span>
+	
+	@ApiModelProperty(value = &quot;Number of telephone of the customer.&quot; , example = &quot;33302220&quot;)
+<span class="nc" id="L35">    private int telefonoResidencia;</span>
+	
+	@ApiModelProperty(value = &quot;Number of celphone of the customer.&quot; , example = &quot;3211233344&quot;)
+<span class="nc" id="L38">    private Long celularPersonal;</span>
+	
+	@ApiModelProperty(value = &quot;Email of the customer.&quot; , example = &quot;fjend@gmail.com&quot;)
+<span class="nc" id="L41">    private String correoPersonal;</span>
+	
+	@ApiModelProperty(value = &quot;Customer revenue.&quot; , example = &quot;1200000&quot;)
+<span class="nc" id="L44">    private int ingresosMensuales;</span>
+	
+	@ApiModelProperty(value = &quot;Requested value of the amount.&quot; , example = &quot;20000000&quot;)
+<span class="nc" id="L47">    private String valorSolicitado;</span>
+
+    //se añaden nuevos campos
+
+	@ApiModelProperty(value = &quot;Country of issue of the client's document.&quot; , example = &quot;1&quot;)
+<span class="nc" id="L52">    private int paisDeExpedicion;</span>
+	
+	@ApiModelProperty(value = &quot;Date of issue of the client's document.&quot; , example = &quot;2010-22-12&quot;)
+<span class="nc" id="L55">    private String fechaDeExpedicion;</span>
+	
+	@ApiModelProperty(value = &quot;Department code.&quot; , example = &quot;012&quot;)
+<span class="nc" id="L58">    private String idDepartamentos;</span>
+	
+	@ApiModelProperty(value = &quot;Place of issuance of the client's document.&quot; , example = &quot;1&quot;)
+<span class="nc" id="L61">    private int lugarDeExpedicion;</span>
+	
+	@ApiModelProperty(value = &quot;Client's country of birth.&quot; , example = &quot;1&quot;)
+<span class="nc" id="L64">    private int paisNacimiento;</span>
+	
+	@ApiModelProperty(value = &quot;Client's nationality.&quot; , example = &quot;1&quot;)
+<span class="nc" id="L67">    private int nacionalidad;</span>
+	
+	@ApiModelProperty(value = &quot;Place of birth&quot; , example = &quot;Bogota&quot;)
+<span class="nc" id="L70">    private int lugarDeNacimiento;</span>
+	
+	@ApiModelProperty(value = &quot;Gender&quot; , example = &quot;1&quot;)
+<span class="nc" id="L73">    private int genero;</span>
+	
+	@ApiModelProperty(value = &quot;Civil status.&quot; , example = &quot;1&quot;)
+<span class="nc" id="L76">    private int estadoCivil;</span>
+	
+	@ApiModelProperty(value = &quot;Stratum&quot; , example = &quot;1&quot;)
+<span class="nc" id="L79">    private int estrato;</span>
+	
+	@ApiModelProperty(value = &quot;Country where you live.&quot; , example = &quot;1&quot;)
+<span class="nc" id="L82">    private int paisResidencia;</span>
+	
+	@ApiModelProperty(value = &quot;City where you live.&quot; , example = &quot;Bogota&quot;)
+<span class="nc" id="L85">    private String ciudadResidencia;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;calle&quot;)
+<span class="nc" id="L88">    private String tipoViaResidencia;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;edificio&quot;)
+<span class="nc" id="L91">    private String nombreViaResidencia;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;cll-34#54-09&quot;)
+<span class="nc" id="L94">    private String direccionViaResidencia;</span>
+	
+	@ApiModelProperty(value = &quot;Economic activity&quot; , example = &quot;Empleado&quot;)
+<span class="nc" id="L97">    private String actividadEconomica;</span>
+	
+	@ApiModelProperty(value = &quot;Type of economic activity&quot; , example = &quot;1&quot;)
+<span class="nc" id="L100">    private int tipoDeActividad;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;Consultores S.A&quot;)
+<span class="nc" id="L103">    private String empresaActualoActividad;</span>
+	
+	@ApiModelProperty(value = &quot;Nit of the company&quot; , example = &quot;11110092&quot;)
+<span class="nc" id="L106">    private int nitEmpresa;</span>
+	
+	@ApiModelProperty(value = &quot;Actual charge&quot; , example = &quot;Jefe&quot;)
+<span class="nc" id="L109">    private String cargoActualActividad;</span>
+	
+	@ApiModelProperty(value = &quot;Date of admission&quot; , example = &quot;2020-21-01&quot;)
+<span class="nc" id="L112">    private String fechaDeIngreso;</span>
+	
+	@ApiModelProperty(value = &quot;Type of contract&quot; , example = &quot;1&quot;)
+<span class="nc" id="L115">    private int tipoDeContrato;</span>
+	
+	@ApiModelProperty(value = &quot;Company country&quot; , example = &quot;1&quot;)
+<span class="nc" id="L118">    private int paisEmpresa;</span>
+	
+	@ApiModelProperty(value = &quot;City company&quot; , example = &quot;1&quot;)
+<span class="nc" id="L121">    private int ciudadEmpresaActividadActu;</span>
+	
+	@ApiModelProperty(value = &quot;Type of work route&quot; , example = &quot;calle&quot;)
+<span class="nc" id="L124">    private String tipoViaLaboral;</span>
+	
+	@ApiModelProperty(value = &quot;Name of work route&quot; , example = &quot;&quot;)
+<span class="nc" id="L127">    private String nombreViaLaboral;</span>
+	
+	@ApiModelProperty(value = &quot;Work address&quot; , example = &quot;calle 100 #45-90&quot;)
+<span class="nc" id="L130">    private String direccionLaboral;</span>
+	
+	@ApiModelProperty(value = &quot;Number telephone of the work&quot; , example = &quot;2203982&quot;)
+<span class="nc" id="L133">    private int telefonoLaboral;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;22&quot;)
+<span class="nc" id="L136">    private int codigosCiiDian;</span>
+	
+	@ApiModelProperty(value = &quot;Number of the employee of the company&quot; , example = &quot;100&quot;)
+<span class="nc" id="L139">    private int numeroDeEmpleados;</span>
+	
+	@ApiModelProperty(value = &quot;Company constitution date&quot; , example = &quot;1995-01-01&quot;)
+<span class="nc" id="L142">    private String fechaDeConstitucionEmpresa;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;true&quot;)
+<span class="nc" id="L145">    private Boolean poseeProductosDeMonedaExtr;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;true&quot;)
+<span class="nc" id="L148">    private Boolean realizaOperacionesInternac;</span>
+	
+	@ApiModelProperty(value = &quot;Monthly expenses&quot; , example = &quot;1200000&quot;)
+<span class="nc" id="L151">    private int egresosMensuales;</span>
+	
+	@ApiModelProperty(value = &quot;Assets&quot; , example = &quot;123&quot;)
+<span class="nc" id="L154">    private int activos;</span>
+	
+	@ApiModelProperty(value = &quot;Passives&quot; , example = &quot;222&quot;)
+<span class="nc" id="L157">    private int pasivos;</span>
+	
+	@ApiModelProperty(value = &quot;Additional income&quot; , example = &quot;5000000&quot;)
+<span class="nc" id="L160">    private int ingresosAdicionales;</span>
+	
+	@ApiModelProperty(value = &quot;Description income addition&quot; , example = &quot;descripcion&quot;)
+<span class="nc" id="L163">    private String descripcionIngresosAdicion;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;&quot;)
+<span class="nc" id="L166">    private String clientePep;</span>
+	
+	@ApiModelProperty(value = &quot;Publicly exposed person&quot; , example = &quot;1&quot;)
+<span class="nc" id="L169">    private int personaPubicamenteExpuesta;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;1&quot;)
+<span class="nc" id="L172">    private int personaConReconPublico;</span>
+	
+	@ApiModelProperty(value = &quot;Requested quota approved&quot; , example = &quot;1&quot;)
+<span class="nc" id="L175">    private int cupoSolicitadoAprobado;</span>
+	
+	@ApiModelProperty(value = &quot;Life insurance premium&quot; , example = &quot;1&quot;)
+<span class="nc" id="L178">    private int primaSegurodeVida;</span>
+	
+	@ApiModelProperty(value = &quot;Type of credit&quot; , example = &quot;Activos&quot;)
+<span class="nc" id="L181">    private String tipoDeCredito;</span>
+	
+	@ApiModelProperty(value = &quot;Consumption financing plan&quot; , example = &quot;&quot;)
+<span class="nc" id="L184">    private String convenioConsumo;</span>
+	
+	@ApiModelProperty(value = &quot;Term&quot; , example = &quot;6&quot;)
+<span class="nc" id="L187">    private String plazo;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;&quot;)
+<span class="nc" id="L190">    private String planFinanciacionConsumo;</span>
+	
+	@ApiModelProperty(value = &quot;Payday&quot; , example = &quot;30&quot;)
+<span class="nc" id="L193">    private String diaDePago;</span>
+	
+	@ApiModelProperty(value = &quot;Rate&quot; , example = &quot;15&quot;)
+<span class="nc" id="L196">    private String tasa;</span>
+	
+	@ApiModelProperty(value = &quot;Subsidized plan&quot; , example = &quot;true&quot;)
+<span class="nc" id="L199">    private Boolean planSubvencionado;</span>
+	
+	@ApiModelProperty(value = &quot;Subsidized value&quot; , example = &quot;&quot;)
+<span class="nc" id="L202">    private String valorSubvecionado;</span>
+	
+	@ApiModelProperty(value = &quot;Authorization for contact by whatsapp&quot; , example = &quot;true&quot;)
+<span class="nc" id="L205">    private Boolean autorizaContactoWhatsapp;</span>
+	
+	@ApiModelProperty(value = &quot;Reinstatement program&quot; , example = &quot;ok&quot;)
+<span class="nc" id="L208">    private String programaReincorporacion;</span>
+	
+	@ApiModelProperty(value = &quot;Resolution number&quot; , example = &quot;1&quot;)
+<span class="nc" id="L211">    private int numeroResolucion;</span>
+	
+	@ApiModelProperty(value = &quot;Resolution date&quot; , example = &quot;2020-12-23&quot;)
+<span class="nc" id="L214">    private String fechaResolucion;</span>
+	
+	@ApiModelProperty(value = &quot;Dealership number&quot; , example = &quot;1&quot;)
+<span class="nc" id="L217">    private int idConcesionarios;</span>
+	
+	@ApiModelProperty(value = &quot;Dealer account&quot; , example = &quot;&quot;)
+<span class="nc" id="L220">    private String concesionarioCuenta;</span>
+	
+	@ApiModelProperty(value = &quot;Secure payment method&quot; , example = &quot;1&quot;)
+<span class="nc" id="L223">    private int modalidadDePagoSeguro;</span>
+	
+	@ApiModelProperty(value = &quot;Authorization for automatic debit&quot; , example = &quot;true&quot;)
+<span class="nc" id="L226">    private Boolean autorizacionDebitoAutomatico;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;1&quot;)
+<span class="nc" id="L229">    private int bancoDebito;</span>
+	
+	@ApiModelProperty(value = &quot;Debit account number&quot; , example = &quot;11122224&quot;)
+<span class="nc" id="L232">    private String numeroCuentaDebito;</span>
+	
+	@ApiModelProperty(value = &quot;account type&quot; , example = &quot;1&quot;)
+<span class="nc" id="L235">    private int tipoDeCuenta;</span>
+	
+	@ApiModelProperty(value = &quot;Labor city.&quot; , example = &quot;Bogota&quot;)
+<span class="nc" id="L238">    private String ciudadLaboral;</span>
+	
+	@ApiModelProperty(value = &quot;Secure policy&quot; , example = &quot;ok&quot;)
+<span class="nc" id="L241">    private Boolean tomaPolizaSeguro;</span>
+	
+	@ApiModelProperty(value = &quot;Car insurance premium&quot; , example = &quot;ok&quot;)
+<span class="nc" id="L244">    private Boolean primaSeguroAutomovil;</span>
+	
+	@ApiModelProperty(value = &quot;&quot; , example = &quot;1&quot;)
+<span class="nc" id="L247">	private int ingresosMensualesViabiliza;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

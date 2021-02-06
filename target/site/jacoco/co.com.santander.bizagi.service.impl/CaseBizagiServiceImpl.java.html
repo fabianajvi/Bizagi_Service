@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CaseBizagiServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bizagi-web</a> &gt; <a href="index.source.html" class="el_package">co.com.santander.bizagi.service.impl</a> &gt; <span class="el_source">CaseBizagiServiceImpl.java</span></div><h1>CaseBizagiServiceImpl.java</h1><pre class="source lang-java linenums">package co.com.santander.bizagi.service.impl;
+
+import co.com.santander.bizagi.client.CaseBizagiClient;
+import co.com.santander.bizagi.common.generic.GenericResponse;
+import co.com.santander.bizagi.common.properties.ServiciosProperties;
+import co.com.santander.bizagi.dto.BizAgiWSParam;
+import co.com.santander.bizagi.dto.Case;
+import co.com.santander.bizagi.dto.Cliente;
+import co.com.santander.bizagi.dto.ResponseJson;
+import co.com.santander.bizagi.dto.SolicitudCredito;
+import co.com.santander.bizagi.service.CaseBizagiService;
+import co.com.santander.bizagi.util.StringUtilities;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.google.gson.Gson;
+
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class CaseBizagiServiceImpl implements CaseBizagiService {
+	public static final String TEMPLATES_REQUEST_CREATE_CASE_CONSUMO_DIGITAL = &quot;templates/requestCreateCaseConsumoDigital.vm&quot;;
+	public static final String TEMPLATES_REQUEST_CREATE_CASE_CONSUMO_PERSONA_NATURAL = &quot;templates/requestCreateCaseConsumoPersonaNatural.vm&quot;;
+	private final CaseBizagiClient caseBizagiClient;
+	private final VelocityEngine velocityEngine;
+	private final VelocityContext context;
+	private final StringUtilities stringUtilities;
+	private final ServiciosProperties serviciosProperties;
+
+	@Autowired
+	public CaseBizagiServiceImpl(CaseBizagiClient caseBizagiClient, VelocityEngine velocityEngine,
+<span class="fc" id="L40">			VelocityContext context, StringUtilities stringUtilities, ServiciosProperties serviciosProperties) {</span>
+<span class="fc" id="L41">		this.caseBizagiClient = caseBizagiClient;</span>
+<span class="fc" id="L42">		this.velocityEngine = velocityEngine;</span>
+<span class="fc" id="L43">		this.context = context;</span>
+<span class="fc" id="L44">		this.stringUtilities = stringUtilities;</span>
+<span class="fc" id="L45">		this.serviciosProperties = serviciosProperties;</span>
+<span class="fc" id="L46">	}</span>
+
+	@Override
+	public Optional&lt;ResponseJson&gt; createCaseString(Cliente cliente) throws MalformedURLException, JSONException {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (cliente.getValorSolicitado() == null) {</span>
+<span class="nc" id="L51">			String request = putParametersVelocityConsumoDigital(cliente).replaceAll(&quot;\r&quot;, &quot;&quot;);</span>
+<span class="nc" id="L52">			String r = stringUtilities</span>
+<span class="nc" id="L53">					.xmlToJson(stringUtilities.cdataToJson(caseBizagiClient.createCaseString(request)));</span>
+<span class="nc" id="L54">			String respuesta = r;</span>
+<span class="nc" id="L55">			Gson g = new Gson();</span>
+<span class="nc" id="L56">			ResponseJson p = g.fromJson(respuesta, ResponseJson.class);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">			if (p != null) {</span>
+<span class="nc" id="L58">				return Optional.of(p);</span>
+
+			}
+<span class="nc" id="L61">			return Optional.empty();</span>
+
+		} else {
+<span class="nc" id="L64">			String requestString = putParametersVelocityConsumoPersonaNatural(cliente).replaceAll(&quot;\r&quot;, &quot;&quot;);</span>
+<span class="nc" id="L65">			String r1 = stringUtilities</span>
+<span class="nc" id="L66">					.xmlToJson(stringUtilities.cdataToJson(caseBizagiClient.createCaseString(requestString)));</span>
+<span class="nc" id="L67">			String respuesta1 = r1;</span>
+<span class="nc" id="L68">			Gson g = new Gson();</span>
+<span class="nc" id="L69">			ResponseJson p = g.fromJson(respuesta1, ResponseJson.class);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (p != null) {</span>
+<span class="nc" id="L71">				return Optional.of(p);</span>
+
+			}
+<span class="nc" id="L74">			return Optional.empty();</span>
+
+		}
+	}
+
+	@Override
+	public GenericResponse createCase(Cliente cliente) throws MalformedURLException, JSONException {
+<span class="fc" id="L81">		BizAgiWSParam request = setParams(cliente, serviciosProperties);</span>
+<span class="fc" id="L82">		return GenericResponse.builder().codRespuesta(&quot;1&quot;).respuestaError(&quot;null&quot;)</span>
+<span class="fc" id="L83">				.respuestaServicio(caseBizagiClient.createCase(request)).build();</span>
+	}
+
+	private BizAgiWSParam setParams(Cliente cliente, ServiciosProperties serviciosProperties) {
+<span class="fc" id="L87">		return BizAgiWSParam.builder().domain(serviciosProperties.getDomain())</span>
+<span class="fc" id="L88">				.userName(serviciosProperties.getUserName()).Case(setCase(cliente)).build();</span>
+	}
+
+	private List&lt;Case&gt; setCase(Cliente cliente) {
+<span class="fc" id="L92">		List&lt;Case&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L93">		result.add(Case.builder().Entities(setSolicitudCredito(cliente))</span>
+<span class="fc" id="L94">				.Process(serviciosProperties.getConsumoPersona()).build());</span>
+<span class="fc" id="L95">		return result;</span>
+	}
+
+	private List&lt;SolicitudCredito&gt; setSolicitudCredito(Cliente cliente) {
+<span class="fc" id="L99">		List&lt;SolicitudCredito&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L100">		result.add(SolicitudCredito.builder()</span>
+<span class="fc" id="L101">				.AutorizaConsultaaCentrales(serviciosProperties.getAutorizaConsultaaCentrales()).cliente(cliente)</span>
+<span class="fc" id="L102">				.build());</span>
+<span class="fc" id="L103">		return result;</span>
+	}
+
+	private String putParametersVelocityConsumoDigital(Cliente cliente) {
+<span class="nc" id="L107">		Template template = velocityEngine.getTemplate(TEMPLATES_REQUEST_CREATE_CASE_CONSUMO_DIGITAL, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L108">		context.put(&quot;domain&quot;, serviciosProperties.getDomain());</span>
+<span class="nc" id="L109">		context.put(&quot;username&quot;, serviciosProperties.getUserName());</span>
+<span class="nc" id="L110">		context.put(&quot;consumoDigital&quot;, serviciosProperties.getConsumoDigital());</span>
+<span class="nc" id="L111">		context.put(&quot;documentnumber&quot;, cliente.getNumeroIdentificacion());</span>
+<span class="nc" id="L112">		context.put(&quot;typedocument&quot;, cliente.getTipodeidentificacion());</span>
+<span class="nc" id="L113">		context.put(&quot;apellido1&quot;, cliente.getApellido1());</span>
+<span class="nc" id="L114">		context.put(&quot;apellido2&quot;, cliente.getApellido2());</span>
+<span class="nc" id="L115">		context.put(&quot;nombre1&quot;, cliente.getNombre1());</span>
+<span class="nc" id="L116">		context.put(&quot;nombre2&quot;, cliente.getNombre2());</span>
+
+<span class="nc" id="L118">		context.put(&quot;fechanacimiento&quot;, cliente.getFechaNacimiento());</span>
+<span class="nc" id="L119">		context.put(&quot;telefono&quot;, cliente.getTelefonoResidencia());</span>
+<span class="nc" id="L120">		context.put(&quot;celular&quot;, cliente.getCelularPersonal());</span>
+<span class="nc" id="L121">		context.put(&quot;correo&quot;, cliente.getCorreoPersonal());</span>
+<span class="nc" id="L122">		context.put(&quot;ingresosmensuales&quot;, cliente.getIngresosMensuales());</span>
+<span class="nc" id="L123">		context.put(&quot;autorizaContactoWhatsapp&quot;, cliente.getAutorizaContactoWhatsapp());</span>
+
+<span class="nc" id="L125">		context.put(&quot;lugarDeExpedicion&quot;, cliente.getLugarDeExpedicion());</span>
+<span class="nc" id="L126">		context.put(&quot;modalidadDePagoSeguro&quot;, cliente.getModalidadDePagoSeguro());</span>
+<span class="nc" id="L127">		context.put(&quot;valorSubvecionado&quot;, cliente.getValorSubvecionado());</span>
+<span class="nc" id="L128">		context.put(&quot;tasa&quot;, cliente.getTasa());</span>
+<span class="nc" id="L129">		context.put(&quot;cupoSolicitadoAprobado&quot;, cliente.getCupoSolicitadoAprobado());</span>
+<span class="nc" id="L130">		context.put(&quot;personaConReconPublico&quot;, cliente.getPersonaConReconPublico());</span>
+<span class="nc" id="L131">		context.put(&quot;personaPubicamenteExpuesta&quot;, cliente.getPersonaPubicamenteExpuesta());</span>
+<span class="nc" id="L132">		context.put(&quot;diaDePago&quot;, cliente.getDiaDePago());</span>
+<span class="nc" id="L133">		context.put(&quot;concesionarioCuenta&quot;, cliente.getConcesionarioCuenta());</span>
+<span class="nc" id="L134">		context.put(&quot;tipoDeCuenta&quot;, cliente.getTipoDeCuenta());</span>
+<span class="nc" id="L135">		context.put(&quot;bancoDebito&quot;, cliente.getBancoDebito());</span>
+<span class="nc" id="L136">		context.put(&quot;autorizacionDebitoAutomatico&quot;, cliente.getAutorizacionDebitoAutomatico());</span>
+<span class="nc" id="L137">		context.put(&quot;numeroCuentaDebito&quot;, cliente.getNumeroCuentaDebito());</span>
+<span class="nc" id="L138">		context.put(&quot;primaSeguro&quot;, cliente.getPrimaSegurodeVida());</span>
+<span class="nc" id="L139">		context.put(&quot;autorizaContacto&quot;, cliente.getAutorizaContactoWhatsapp());</span>
+<span class="nc" id="L140">		context.put(&quot;planSubvencionado&quot;, cliente.getPlanSubvencionado());</span>
+<span class="nc" id="L141">		context.put(&quot;planFinanciacionConsumo&quot;, cliente.getPlanFinanciacionConsumo());</span>
+<span class="nc" id="L142">		context.put(&quot;tipoCredito&quot;, cliente.getTipoDeCredito());</span>
+<span class="nc" id="L143">		context.put(&quot;convenioConsumo&quot;, cliente.getConvenioConsumo());</span>
+<span class="nc" id="L144">		context.put(&quot;paisDeExpedicion&quot;, cliente.getPaisDeExpedicion());</span>
+<span class="nc" id="L145">		context.put(&quot;fechaDeExpedicion&quot;, cliente.getFechaDeExpedicion());</span>
+<span class="nc" id="L146">		context.put(&quot;idDepartamentos&quot;, cliente.getIdDepartamentos());</span>
+<span class="nc" id="L147">		context.put(&quot;paisNacimiento&quot;, cliente.getPaisNacimiento());</span>
+<span class="nc" id="L148">		context.put(&quot;nacionalidad&quot;, cliente.getNacionalidad());</span>
+<span class="nc" id="L149">		context.put(&quot;lugarDeNacimiento&quot;, cliente.getLugarDeNacimiento());</span>
+<span class="nc" id="L150">		context.put(&quot;genero&quot;, cliente.getGenero());</span>
+<span class="nc" id="L151">		context.put(&quot;estadoCivil&quot;, cliente.getEstadoCivil());</span>
+<span class="nc" id="L152">		context.put(&quot;estrato&quot;, cliente.getEstrato());</span>
+<span class="nc" id="L153">		context.put(&quot;paisResidencia&quot;, cliente.getPaisResidencia());</span>
+<span class="nc" id="L154">		context.put(&quot;ciudadResidencia&quot;, cliente.getCiudadResidencia());</span>
+<span class="nc" id="L155">		context.put(&quot;tipoViaResidencia&quot;, cliente.getTipoViaResidencia());</span>
+<span class="nc" id="L156">		context.put(&quot;nombreViaResidencia&quot;, cliente.getNombreViaResidencia());</span>
+<span class="nc" id="L157">		context.put(&quot;direccionViaResidencia&quot;, cliente.getDireccionViaResidencia());</span>
+<span class="nc" id="L158">		context.put(&quot;actividadEconomica&quot;, cliente.getActividadEconomica());</span>
+<span class="nc" id="L159">		context.put(&quot;tipoDeActividad&quot;, cliente.getTipoDeActividad());</span>
+<span class="nc" id="L160">		context.put(&quot;empresaActualoActividad&quot;, cliente.getEmpresaActualoActividad());</span>
+<span class="nc" id="L161">		context.put(&quot;nitEmpresa&quot;, cliente.getNitEmpresa());</span>
+<span class="nc" id="L162">		context.put(&quot;cargoActualActividad&quot;, cliente.getCargoActualActividad());</span>
+<span class="nc" id="L163">		context.put(&quot;fechaDeIngreso&quot;, cliente.getFechaDeIngreso());</span>
+<span class="nc" id="L164">		context.put(&quot;tipoDeContrato&quot;, cliente.getTipoDeContrato());</span>
+<span class="nc" id="L165">		context.put(&quot;paisEmpresa&quot;, cliente.getPaisEmpresa());</span>
+<span class="nc" id="L166">		context.put(&quot;ciudadEmpresaActividadActu&quot;, cliente.getCiudadEmpresaActividadActu());</span>
+<span class="nc" id="L167">		context.put(&quot;tipoViaLaboral&quot;, cliente.getTipoViaLaboral());</span>
+<span class="nc" id="L168">		context.put(&quot;nombreViaLaboral&quot;, cliente.getNombreViaLaboral());</span>
+<span class="nc" id="L169">		context.put(&quot;direccionLaboral&quot;, cliente.getDireccionLaboral());</span>
+<span class="nc" id="L170">		context.put(&quot;telefonoLaboral&quot;, cliente.getTelefonoLaboral());</span>
+<span class="nc" id="L171">		context.put(&quot;ciudadLaboral&quot;, cliente.getCiudadLaboral());</span>
+<span class="nc" id="L172">		context.put(&quot;codigosciiDian&quot;, cliente.getCodigosCiiDian());</span>
+<span class="nc" id="L173">		context.put(&quot;numeroDeEmpleados&quot;, cliente.getNumeroDeEmpleados());</span>
+<span class="nc" id="L174">		context.put(&quot;fechaDeConstitucionEmpresa&quot;, cliente.getFechaDeConstitucionEmpresa());</span>
+<span class="nc" id="L175">		context.put(&quot;poseeProductosMoneda&quot;, cliente.getPoseeProductosDeMonedaExtr());</span>
+<span class="nc" id="L176">		context.put(&quot;realizaOperacionesInternac&quot;, cliente.getRealizaOperacionesInternac());</span>
+<span class="nc" id="L177">		context.put(&quot;egresosMensuales&quot;, cliente.getEgresosMensuales());</span>
+<span class="nc" id="L178">		context.put(&quot;activos&quot;, cliente.getActivos());</span>
+<span class="nc" id="L179">		context.put(&quot;pasivos&quot;, cliente.getPasivos());</span>
+<span class="nc" id="L180">		context.put(&quot;ingresosAdicionales&quot;, cliente.getIngresosAdicionales());</span>
+<span class="nc" id="L181">		context.put(&quot;descripcionIngresos&quot;, cliente.getDescripcionIngresosAdicion());</span>
+<span class="nc" id="L182">		context.put(&quot;clientePep&quot;, cliente.getClientePep());</span>
+<span class="nc" id="L183">		context.put(&quot;programaReincorporacion&quot;, cliente.getProgramaReincorporacion());</span>
+<span class="nc" id="L184">		context.put(&quot;numeroResolucion&quot;, cliente.getNumeroResolucion());</span>
+<span class="nc" id="L185">		context.put(&quot;fechaResolucion&quot;, cliente.getFechaResolucion());</span>
+<span class="nc" id="L186">		context.put(&quot;tomaPolizaRiesgo&quot;, cliente.getTomaPolizaSeguro());</span>
+<span class="nc" id="L187">		context.put(&quot;primaSeguroAuto&quot;, cliente.getPrimaSeguroAutomovil());</span>
+<span class="nc" id="L188">		context.put(&quot;ingresosMensualesViabiliza&quot;, cliente.getIngresosMensualesViabiliza());</span>
+<span class="nc" id="L189">		StringWriter writer = new StringWriter();</span>
+<span class="nc" id="L190">		template.merge(context, writer);</span>
+<span class="nc" id="L191">		return writer.toString();</span>
+	}
+
+	private String putParametersVelocityConsumoPersonaNatural(Cliente cliente) {
+<span class="nc" id="L195">		Template template = velocityEngine.getTemplate(TEMPLATES_REQUEST_CREATE_CASE_CONSUMO_PERSONA_NATURAL, &quot;UTF-8&quot;);</span>
+<span class="nc" id="L196">		context.put(&quot;domain&quot;, serviciosProperties.getDomain());</span>
+<span class="nc" id="L197">		context.put(&quot;username&quot;, serviciosProperties.getUserName());</span>
+<span class="nc" id="L198">		context.put(&quot;consumoPersona&quot;, serviciosProperties.getConsumoPersona());</span>
+<span class="nc" id="L199">		context.put(&quot;documentnumber&quot;, cliente.getNumeroIdentificacion());</span>
+<span class="nc" id="L200">		context.put(&quot;typedocument&quot;, cliente.getTipodeidentificacion());</span>
+<span class="nc" id="L201">		context.put(&quot;apellido1&quot;, cliente.getApellido1());</span>
+<span class="nc" id="L202">		context.put(&quot;apellido2&quot;, cliente.getApellido2());</span>
+<span class="nc" id="L203">		context.put(&quot;nombre1&quot;, cliente.getNombre1());</span>
+<span class="nc" id="L204">		context.put(&quot;nombre2&quot;, cliente.getNombre2());</span>
+
+<span class="nc" id="L206">		context.put(&quot;fechanacimiento&quot;, cliente.getFechaNacimiento());</span>
+<span class="nc" id="L207">		context.put(&quot;telefono&quot;, cliente.getTelefonoResidencia());</span>
+<span class="nc" id="L208">		context.put(&quot;celular&quot;, cliente.getCelularPersonal());</span>
+<span class="nc" id="L209">		context.put(&quot;correo&quot;, cliente.getCorreoPersonal());</span>
+<span class="nc" id="L210">		context.put(&quot;ingresosmensuales&quot;, cliente.getIngresosMensuales());</span>
+<span class="nc" id="L211">		context.put(&quot;valorvehiculo&quot;, cliente.getValorSolicitado());</span>
+<span class="nc" id="L212">		context.put(&quot;autorizaCentrales&quot;, serviciosProperties.getAutorizaConsultaaCentrales());</span>
+<span class="nc" id="L213">		StringWriter writer = new StringWriter();</span>
+<span class="nc" id="L214">		template.merge(context, writer);</span>
+<span class="nc" id="L215">		return writer.toString();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

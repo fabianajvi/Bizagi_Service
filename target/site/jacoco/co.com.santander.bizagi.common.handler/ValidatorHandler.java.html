@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidatorHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bizagi-web</a> &gt; <a href="index.source.html" class="el_package">co.com.santander.bizagi.common.handler</a> &gt; <span class="el_source">ValidatorHandler.java</span></div><h1>ValidatorHandler.java</h1><pre class="source lang-java linenums">package co.com.santander.bizagi.common.handler;
+
+import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPFault;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.handler.soap.SOAPHandler;
+import javax.xml.ws.handler.soap.SOAPMessageContext;
+import javax.xml.ws.soap.SOAPFaultException;
+import java.io.IOException;
+import java.util.Set;
+
+<span class="nc" id="L15">public class ValidatorHandler implements SOAPHandler&lt;SOAPMessageContext&gt; {</span>
+    @Override
+    public Set&lt;QName&gt; getHeaders() {
+<span class="nc" id="L18">        return null;</span>
+    }
+
+    @Override
+    public boolean handleMessage(SOAPMessageContext context) {
+<span class="nc" id="L23">        Boolean isRequest = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);</span>
+        try {
+<span class="nc" id="L25">            SOAPMessage soapMsg = context.getMessage();</span>
+            //tracking
+<span class="nc" id="L27">            soapMsg.writeTo(System.out);</span>
+<span class="nc" id="L28">        } catch (SOAPException e) {</span>
+<span class="nc" id="L29">            return false;</span>
+<span class="nc" id="L30">        } catch (IOException e) {</span>
+<span class="nc" id="L31">            return false;</span>
+<span class="nc" id="L32">        }</span>
+<span class="nc" id="L33">        return true;</span>
+    }
+
+    @Override
+    public boolean handleFault(SOAPMessageContext context) {
+<span class="nc" id="L38">        return true;</span>
+    }
+
+    @Override
+    public void close(MessageContext context) {
+
+<span class="nc" id="L44">    }</span>
+
+    private void generateSOAPErrMessage(SOAPMessage msg, String reason) {
+        try {
+<span class="nc" id="L48">            SOAPBody soapBody = msg.getSOAPPart().getEnvelope().getBody();</span>
+<span class="nc" id="L49">            SOAPFault soapFault = soapBody.addFault();</span>
+<span class="nc" id="L50">            soapFault.setFaultString(reason);</span>
+<span class="nc" id="L51">            throw new SOAPFaultException(soapFault);</span>
+<span class="nc" id="L52">        } catch (SOAPException e) {</span>
+        }
+<span class="nc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

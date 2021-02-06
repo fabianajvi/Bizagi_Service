@@ -1,0 +1,9 @@
+co\com\santander\bizagi\controller\CaseBizagiControllerTest.class
+co\com\santander\bizagi\common\generic\RequestHeaderTest.class
+co\com\santander\bizagi\client\MockResponseCreateCase.class
+co\com\santander\bizagi\service\CaseBizagiServiceTest.class
+co\com\santander\bizagi\service\MockRequestCreateCase.class
+co\com\santander\bizagi\client\CaseBizagiClientTest.class
+co\com\santander\bizagi\common\generic\GeneralPayloadTest.class
+co\com\santander\bizagi\common\properties\SystemPropertiesTest.class
+co\com\santander\bizagi\common\generic\GenericResponseTest.class

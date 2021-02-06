@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CaseBizagiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bizagi-web</a> &gt; <a href="index.source.html" class="el_package">co.com.santander.bizagi.controller</a> &gt; <span class="el_source">CaseBizagiController.java</span></div><h1>CaseBizagiController.java</h1><pre class="source lang-java linenums">package co.com.santander.bizagi.controller;
+
+import java.net.MalformedURLException;
+import java.util.Optional;
+
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import co.com.santander.bizagi.common.generic.GeneralPayload;
+import co.com.santander.bizagi.common.generic.GenericResponse;
+import co.com.santander.bizagi.dto.Cliente;
+import co.com.santander.bizagi.dto.ResponseJson;
+import co.com.santander.bizagi.dto.ResponsePayLoad;
+import co.com.santander.bizagi.service.CaseBizagiService;
+import co.com.santander.bizagi.util.ConstanstsExamplesApi;
+import co.com.santander.bizagi.util.MessageApi;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Example;
+import io.swagger.annotations.ExampleProperty;
+
+@RestController
+@RequestMapping(&quot;v1/bizagi&quot;)
+@Api(value = &quot;Bizagi&quot;, tags = { &quot;V1: Create Bizagi case.&quot; })
+public class CaseBizagiController {
+	private final CaseBizagiService caseBizagiService;
+
+	@Autowired
+<span class="fc" id="L38">	public CaseBizagiController(CaseBizagiService caseBizagiService) {</span>
+<span class="fc" id="L39">		this.caseBizagiService = caseBizagiService;</span>
+<span class="fc" id="L40">	}</span>
+
+	@ApiOperation(value = &quot;Create Application.&quot;, notes = &quot;This service allows creating a case in bizagi.&quot;)
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = MessageApi.Constants.STATUS_OK, response = ResponsePayLoad.class, examples = @Example(@ExampleProperty(mediaType = MediaType.APPLICATION_JSON_VALUE, value = ConstanstsExamplesApi.CREATE_CASE))),
+			@ApiResponse(code = 400, message = MessageApi.Constants.LABELS_ERROR, response = ResponsePayLoad.class),
+			@ApiResponse(code = 408, message = MessageApi.Constants.CONNECT_TIMEOUT, response = ResponsePayLoad.class),
+			@ApiResponse(code = 404, message = MessageApi.Constants.NOT_FOUND, response = ResponsePayLoad.class) })
+	@PostMapping(value = &quot;/&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity&lt;?&gt; createCase(@RequestBody(required = true) GeneralPayload&lt;Cliente&gt; clientePayload)
+			throws MalformedURLException, JSONException {
+<span class="nc" id="L51">		Optional&lt;ResponseJson&gt; response = caseBizagiService.createCaseString(clientePayload.getRequestBody());</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if(response.get().getProcesses().getProcess().getProcessRadNumber() != null) {</span>
+<span class="nc" id="L53">			return new ResponseEntity&lt;&gt;(ResponsePayLoad.builder().codRespuesta(&quot;1&quot;)</span>
+<span class="nc" id="L54">					.respuestaServicio(response.get().getProcesses().getProcess()).mensajeError(&quot;OK&quot;).build(), HttpStatus.OK);</span>
+		}
+<span class="nc" id="L56">		return new ResponseEntity&lt;&gt;(ResponsePayLoad.builder().codRespuesta(&quot;0&quot;)</span>
+<span class="nc" id="L57">				.respuestaServicio(response.get().getProcesses().getProcess()).mensajeError(&quot;OK&quot;).build(), HttpStatus.BAD_REQUEST);</span>
+		
+
+	}
+
+	@PostMapping(value = &quot;/create-case&quot;, produces = MediaType.APPLICATION_JSON_VALUE)
+	public GenericResponse createCaseObject(@RequestBody GeneralPayload&lt;Cliente&gt; clientePayload)
+			throws MalformedURLException, JSONException {
+<span class="fc" id="L65">		return this.caseBizagiService.createCase(clientePayload.getRequestBody());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,45 @@
+server:
+  servlet:
+    context-path: /bizagi
+  port: 8032
+  ssl:
+    enabled: true
+    key-store: classpath:keystore/santanderconsumer.p12
+    key-store-password: Colombia2020*
+    key-store-type: pkcs12
+    key-alias: "*.santanderconsumer.co"
+    key-password: Colombia2020*
+
+servicios:
+  #uriCrearCaso: http://172.60.1.2:80/Originacion2019/WebServices/WorkflowEngineSOA?WSDL #--- Red Samtel
+  uriCrearCaso: http://10.10.10.77:80/Originacion2019/WebServices/WorkflowEngineSOA?WSDL #--Red Santander Consumer
+  domain: premiercredit
+  userName: Bizagi_Samtel
+  consumoPersona: ConsumoPersonaNatural
+  consumoDigital: ConsumoDigital
+  autorizaConsultaaCentrales: 1
+  
+info:
+  app:
+    name: ${project.name}
+    description: proyecto core
+    version: ${project.version}
+logging:
+  config: classpath:logback-spring.xml
+
+spring:
+  profiles:
+    active: "@spring.profiles.active@"
+keycloak:
+  realm: sc-security
+  auth-server-url: https://sso-security.santanderconsumer.co:8443/auth
+  ssl-required: external
+  resource: cli-security-finance
+  security-constraints:
+  - security-collections:
+    - patterns:
+      - /*
+    auth-roles:
+    - uma_authorization
+spring.main.allow-bean-definition-overriding: true
+  
